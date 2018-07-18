@@ -5,7 +5,7 @@ from faker import Faker
 import requests
 from YamJam import yamjam
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pawa.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pawa.settings.production')
 django.setup()
 
 import random
