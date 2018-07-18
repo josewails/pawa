@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+
+
+{% block local_css %}
+    <link rel="stylesheet" href=" https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {{ div | safe }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block local_js %}
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js" rel="script"></script>
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js" rel="script"></script>
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.js" rel="script"></script>
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-api-0.13.0.min.js" rel="script"></script>
+
+    {{ script | safe }}
+{% endblock %}

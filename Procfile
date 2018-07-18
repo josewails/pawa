@@ -1,0 +1,1 @@
+web: gunicorn pamojaness.wsgi --log-file -

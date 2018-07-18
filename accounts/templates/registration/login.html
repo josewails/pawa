@@ -1,0 +1,8 @@
+{% extends 'home.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+            <a href="{% url 'social:begin' 'facebook' %}" type='button' class='btn  btn-fill btn-warning' name='next'>Connect to Facebook</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% load static %}
+<html>
+    <head>
+        <title>Pamojaness</title>
+        <link rel="stylesheet" href="{% static 'pamoja/css/chat_animation.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'pamoja/css/bootstrap.min.css' %}" type="text/css">
+
+        {% block local_css %} {% endblock %}
+    </head>
+    <body>
+
+    <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId            : '2191507397752005',
+              autoLogAppEvents : true,
+              xfbml            : true,
+              version          : 'v3.0'
+            });
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "https://connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+
+
+    {% block content %}
+         <div id="wrapper">
+      <div class="chat">
+        <div class="chat-container">
+          <div class="chat-listcontainer">
+
+      <ul class="chat-message-list">
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <a href="{% url 'main' %}" type="button" class="btn btn-primary btn-lg btn-block">Try Pamojaness</a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    </body>
+
+
+
+    <script rel="script" type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script rel="script" type="text/javascript" src="{% static 'pamoja/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" rel="script" src="{% static 'pamoja/js/chat_animation.js' %}"></script>
+
+    {% block local_js %} {% endblock %}
+
+</html>
