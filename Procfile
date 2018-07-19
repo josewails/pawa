@@ -1,1 +1,1 @@
-web: gunicorn pamojaness.wsgi --log-file -
+web: gunicorn pawa.wsgi --log-file -
