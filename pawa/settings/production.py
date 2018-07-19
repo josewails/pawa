@@ -4,7 +4,7 @@ import dj_database_url
 DEBUG = int(os.environ.get('DEBUG').strip())
 
 ALLOWED_HOSTS = [
-    'pamojaness.herokuapp.com'
+    'pawaness.herokuapp.com'
 ]
 
 db_from_env = dj_database_url.config(conn_max_age=500)
