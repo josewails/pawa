@@ -5,19 +5,19 @@ from factory import fuzzy
 
 from .models import (
     Survey, SurveyQuestion, Group,
-    GroupAdmin
 )
+
+from accounts.models import User
 
 fake = Faker()
 
 class GroupAdminFactory(factory.DjangoModelFactory):
 
     class Meta:
-        model = GroupAdmin
+        model = User
 
-    name = fake.word()
-    user_id = fuzzy.FuzzyInteger(0,100)
-    facebook_id = fake.uuid4()
+    username = fake.name_male()
+    password = fake.uuid4()
 
 
 class GroupFactory(factory.DjangoModelFactory):

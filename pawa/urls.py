@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('pamoja.urls')),
     path('accounts/', include('accounts.urls')),
     path('messenger/', include('messenger.urls')),
+    path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -1,13 +1,13 @@
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.core import exceptions
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import (
     PostForm,
     GroupInfoForm
 )
 
-from .utils import get_groups_context
+from .utils import get_groups_context, response_with_x_frames
 
 from .models import (
     Group,
@@ -27,10 +27,10 @@ def home(request):
 
 def main(request):
     context = {}
-    try:
+    if not request.user.is_anonymous:
         context['user_groups'] = Group.objects.filter(admin=request.user)
 
-    except exceptions.ObjectDoesNotExist:
+    else:
         context['user_groups'] = []
 
     return render(request, 'main.html', context)
@@ -48,21 +48,23 @@ def anonymous_post(request, group_id):
             post = Post(message=message, group_id=group_id)
             post.save()
 
-            return HttpResponseRedirect('/anonymous_post_success')
+            response = HttpResponseRedirect('/anonymous_post_success')
+            return response_with_x_frames(response)
 
     context['post_form'] = post_form
-    return render(request, 'anonymous_post.html', context)
-
+    response = render(request, 'anonymous_post.html', context)
+    return response_with_x_frames(response)
 
 def all_posts(request, group_id):
 
     posts = Post.objects.filter(group_id=group_id)
 
-    return render(request, 'posts.html', {'posts': posts})
-
+    response = render(request, 'posts.html', {'posts': posts})
+    return response_with_x_frames(response)
 
 def anonymous_post_success(request):
-    return render(request, 'anonymous_post_success.html', {})
+    response = render(request, 'anonymous_post_success.html', {})
+    return response_with_x_frames(response)
 
 
 def get_group_info(request, group_id):
@@ -79,11 +81,13 @@ def get_group_info(request, group_id):
             group_info.group = current_group
             group_info.save()
 
-            return HttpResponseRedirect('/activity_score/' + str(group_info.id))
+            response = HttpResponseRedirect('/activity_score/' + str(group_info.id))
+            return response_with_x_frames(response)
 
     context['group_info_form'] = group_info_form
 
-    return render(request, 'get_group_info.html', context)
+    response = render(request, 'get_group_info.html', context)
+    return response_with_x_frames(response)
 
 
 def activity_score(request, group_info_id):
@@ -92,7 +96,8 @@ def activity_score(request, group_info_id):
     group_info, _ = GroupInfo.objects.get_or_create(pk=group_info_id)
     context['activity_score'] = group_info.activity_score
 
-    return render(request, 'activity_score.html', context)
+    response = render(request, 'activity_score.html', context)
+    return response_with_x_frames(response)
 
 
 def dashboard(request, group_id):
@@ -101,7 +106,29 @@ def dashboard(request, group_id):
     context = get_groups_context(current_group)
     context['current_group'] = current_group
 
-    return render(request, 'dashboard.html', context)
+    response = render(request, 'dashboard.html', context)
+    return response_with_x_frames(response)
+
+
+@csrf_exempt
+def delete_post(request):
+
+    if request.method == "POST":
+        post_id = request.POST['post_id']
+
+        try:
+            current_post = Post.objects.get(id=post_id)
+
+        except:
+            return HttpResponse("not-exist")
+
+        else:
+            current_post.delete()
+            return HttpResponse('deleted')
+
+    return HttpResponse('error')
+
+
 
 
 

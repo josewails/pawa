@@ -41,21 +41,25 @@ INSTALLED_APPS = [
     'pamoja',
     'messenger',
     'accounts',
+    'api',
 
+    'rest_framework',
     'social_django',
-    'bootstrap3'
+    'bootstrap3',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'pawa.urls'
@@ -179,3 +183,4 @@ LOGIN_REDIRECT_URL = 'main'
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
+CORS_ORIGIN_ALLOW_ALL = True

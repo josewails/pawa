@@ -7,6 +7,12 @@
 
         {% block local_css %} {% endblock %}
     </head>
+
+    <style>
+        body{
+            background-color: #25ceb6;
+        }
+    </style>
     <body>
 
     <script>
@@ -31,26 +37,29 @@
 
 
     {% block content %}
+        We are not here for now  :(
+       {% comment %}
          <div id="wrapper">
-      <div class="chat">
-        <div class="chat-container">
-          <div class="chat-listcontainer">
+          <div class="chat">
+            <div class="chat-container">
+              <div class="chat-listcontainer">
 
-      <ul class="chat-message-list">
-            </ul>
+          <ul class="chat-message-list">
+                </ul>
 
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-offset-3 col-sm-6">
-                <a href="{% url 'main' %}" type="button" class="btn btn-primary btn-lg btn-block">Try Pamojaness</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <a href="{% url 'main' %}" type="button" class="btn btn-primary btn-lg btn-block">Try Pamojaness</a>
+                </div>
             </div>
         </div>
-    </div>
+       {% endcomment %}
     {% endblock %}
     </body>
 

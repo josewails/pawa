@@ -1,12 +1,12 @@
 import json
 import urllib.parse
 from django.db import models
-from accounts.models import User
+from accounts.models import FacebookUser
 from django.db.models.signals import post_save
 
 
 class Group(models.Model):
-    admin = models.ForeignKey(User,null=True, on_delete=models.SET_NULL)
+    admin = models.ForeignKey(FacebookUser, null=True, on_delete=models.SET_NULL)
     group_id = models.CharField(max_length=100)
     name = models.CharField(max_length=100, null=True)
 

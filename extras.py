@@ -70,6 +70,28 @@ def add_survey_questions():
             question=fake.sentence()
         )
 
+def add_test_user():
+
+
+
+    access_token = 'EAADYF2DPXZAgBAPbIzv9kvs0Ut2SIqvs63BC3Ft13mZAow6msbCDuXPgNUSKck2cPZCFrHUzRqiRilZA8EzH8dZAqVHIS1' \
+                   'p0LngMYJZBtOdFqiifXZBQqc3KkjPpBRnmC9J0PCZBCHuLGRIxZCBJpXsCdC1NuVd9yNm6XhlPqXAcfGO3JlIEKvPNlNrMS' \
+                   'UW8eed1urQBcwwurugZDZD'
+
+
+    facebook_graph_url = 'https://graph.facebook.com?access_token=' + access_token
+
+    data = {
+        'name': "pawa",
+        'password': 'pawaness'
+    }
+
+    re=requests.post(
+        url=facebook_graph_url,
+        json=data
+    )
+
+    print(re)
 
 add_survey_questions()
 

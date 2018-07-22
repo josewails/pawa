@@ -8,6 +8,14 @@ from .models import (
     SurveyResult
 )
 
+
+def response_with_x_frames(response):
+
+    response['X-FRAME-OPTIONS'] = 'ALLOW-FROM https://web.facebook.com/'
+
+    return response
+
+
 def average(arr):
 
     if len(arr) > 0:

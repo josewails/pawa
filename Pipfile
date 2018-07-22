@@ -15,6 +15,9 @@ whitenoise = "*"
 dj-database-url = "*"
 gunicorn = "*"
 "psycopg2" = "*"
+factory-boy = "*"
+djangorestframework = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 

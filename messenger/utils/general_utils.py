@@ -62,7 +62,7 @@ def send_question(current_bot_user, current_survey):
 
         quick_replies = []
 
-        for i in range(5):
+        for i in range(4):
             quick_replies.append(
                 text_quick_reply(
                     title=str(i + 1),

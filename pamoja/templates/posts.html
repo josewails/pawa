@@ -7,13 +7,72 @@
         {% for post in posts %}
              <div class="col-sm-6 col-sm-offset-3">
                  <div class="card">
-                  <div class="container">
+
                     <h4><b>Post # {{ post.id }}</b></h4>
-                    <p>{{ post.message }}</p>
-                  </div>
+                    <p id="post-{{ post.id }}"> {{ post.message }}</p>
+
+                     <button class="copy-btn"  id="{{ post.id }}">Copy</button>
+                     <button class="delete-btn" id="{{ post.id }}">Delete</button>
+
                 </div>
              </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block local_js %}
+    <script>
+    $(document).ready(function(){
+
+        $('button').click(function(){
+            var current_id= $(this).attr('id');
+            var current_class = $(this).attr('class');
+
+            if(current_class === 'copy-btn'){
+                current_id = "post-" + current_id;
+
+                var copyText = $("#" + current_id).text();
+
+                $('body').append('<input type="text">');
+
+                var current_input = $('input');
+
+                current_input.val(copyText);
+                current_input.select();
+
+                document.execCommand("copy");
+
+                current_input.remove();
+
+            }else{
+
+                  var current_data = {
+                      'post_id' : current_id
+                  };
+
+                  var request=$.ajax({
+                    url: '/delete_post',
+                    method: 'POST',
+                    data: current_data
+                });
+
+                request.done(function(msg){
+                    if (msg==='deleted'){
+                        alert('Deleted successfully :)');
+                        window.location.reload();
+                    }
+                    else{
+                        alert("No refresh:"+msg);
+                    }
+                });
+
+                request.fail(function(jqXHR, textStatus){
+                   alert("Request failed: "+ textStatus);
+                });
+            }
+
+        });
+    });
+    </script>
 {% endblock %}
