@@ -12,4 +12,4 @@ DATABASES['default'].update(db_from_env)
 
 PAGE_ACCESS_TOKEN = os.environ.get('PAGE_ACCESS_TOKEN')
 
-SITE_URL = 'https://pamojaness.herokuapp.com'
+SITE_URL = 'https://pawaness.herokuapp.com'
