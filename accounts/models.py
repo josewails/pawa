@@ -8,7 +8,7 @@ class User(AbstractUser):
 
 class FacebookUser(models.Model):
     facebook_id = models.CharField(max_length=200)
-    access_token = models.CharField(max_length=200)
+    access_token = models.CharField(max_length=1000)
     name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
     picture_data = models.CharField(max_length=10000, null=True)
