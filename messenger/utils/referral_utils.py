@@ -99,7 +99,7 @@ def handle_selected_group_ref(recipient_id, group_id):
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
 
     current_group = Group.objects.get(id=group_id)
-    message = "Happy to help you with tools to drive engagement in %s Facebook Group.Just tap on a button on the MENU below👇" % current_group.name
+    message = "Happy to help you with tools to drive engagement in %s . Just tap a button on the MENU below 👇" % current_group.name
 
     handle_get_started(recipient_id=recipient_id, message=message)
 
