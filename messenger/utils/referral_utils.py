@@ -69,11 +69,11 @@ def handle_pamojaness_messenger(recipient_id):
 
 
 def handle_honesty_box_ref(recipient_id, group_id):
-    message = 'Share your thoughts anonymously by clicking on honesty box below'
+    message = 'By posting anonymously you can safely get help! Admins will see your message and decide whether to share it in a group but they wont see it came from you.'
 
     buttons = [
         web_button(
-            title='Honesty Box',
+            title='Post now 📤',
             url=settings.SITE_URL + '/anonymous_post/' + str(group_id)
         )
     ]
