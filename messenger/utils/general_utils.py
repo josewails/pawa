@@ -35,7 +35,9 @@ def send_survey(recipient_id, group_id):
     current_bot_user.current_question_index = 0
     current_bot_user.save()
 
-    message = 'You are taking a quick survey for ' + current_group.name + ' Facebook Group'
+    message = 'Hi 👋, you are taking a Sense of Community survey for ' + current_group.name + ' Facebook Group'
+    messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
+    message = "It will take you 2 minutes only 😄. Let's go 🚀"
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
     send_question(current_bot_user, current_survey)
 
@@ -48,7 +50,9 @@ def send_question(current_bot_user, current_survey):
         current_bot_user.current_survey_result_id = None
         current_bot_user.save()
 
-        message = "Thanks for taking the survey"
+        message = "Thanks for taking the survey. It helps us improve our community!"
+        messenger_bot.send_text_message(recipient_id=current_bot_user.messenger_id, message=message)
+        message = "🎈"
         messenger_bot.send_text_message(recipient_id=current_bot_user.messenger_id, message=message)
 
     else:
@@ -101,7 +105,7 @@ def send_share_template(recipient_id, group_id, type=None):
             }
         }
 
-        message = "Click below to share the survey for " + current_group.name
+        message = '🖱️Tap share below to send Sense of Community survey link to ' + current_group.name + ' members on Messenger '
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
         res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
@@ -109,11 +113,11 @@ def send_share_template(recipient_id, group_id, type=None):
 
         share_elements = [
             element(
-                title='Quick Survey',
-                subtitle='Quick Survey for ' + current_group.name,
+                title='How helpful is this community❓',
+                subtitle='We want to gauge sense of community, belonging & satisfaction in ' + current_group.name + 'group. Take a quick survey 👇',
                 buttons=[
                     web_button(
-                        title='Take Survey',
+                        title='Take Survey 🙋',
                         url=share_url
                     )
                 ]
@@ -129,7 +133,7 @@ def send_share_template(recipient_id, group_id, type=None):
             }
         }
 
-        message = 'Click below to share honesty box for ' + current_group.name
+        message = '🖱️Tap share below to send honesty box link to ' + current_group.name + 'members to post anonymously'
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
         res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
@@ -137,11 +141,11 @@ def send_share_template(recipient_id, group_id, type=None):
 
         share_elements = [
             element(
-                title='Post Anonymously',
-                subtitle="Now you can post anonymously to " + current_group.name,
+                title='💌Honesty Box',
+                subtitle="Now you can post sensitive questions anonymously and get help from " + current_group.name + " members ",
                 buttons=[
                     web_button(
-                        title='Post Now',
+                        title='Post anonymously 📤',
                         url=share_url
                     )
                 ]
@@ -154,15 +158,15 @@ def send_share_template(recipient_id, group_id, type=None):
 
     elements = (
         element(
-            title='Share on messenger',
-            subtitle=message + ' on facebook messenger',
+            title='✔️Send to Messenger group',
+            subtitle=message,
             buttons=[
                 share_with_template(share_elements)
             ]
         ),
         element(
-            title='Share on whatsapp',
-            subtitle=message + ' on whatsapp',
+            title='✅Send to WhatsApp group',
+            subtitle=message,
             buttons=[
                 web_button(
                     title='Share on whatsapp',
@@ -188,11 +192,11 @@ def handle_get_started(recipient_id, message=""):
 
     elements = [
         element(
-            title='Activity_score',
-            subtitle='Now you can see the activity score of your group',
+            title='📈Group Activity Score',
+            subtitle='➡️Navigate to Group Insights on Facebook to get this data',
             buttons=[
                 web_button(
-                    title='Activity Score',
+                    title='Calculate Activity Score 🔢',
                     url=settings.SITE_URL+'/get_group_info/' + str(current_bot_user.current_group_id),
                     messenger_extensions=True,
                     height='full'
@@ -200,31 +204,31 @@ def handle_get_started(recipient_id, message=""):
             ]
         ),
         element(
-            title='Honesty Box',
-            subtitle='This is a small honesty box that you want to hear about',
+            title='✉️HonestyBox',
+            subtitle='Give members a voice to seek help with the power to post anonymously',
             buttons =[
                 postback_button(
-                    title='Honesty Box',
+                    title='Give a voice 🎤',
                     payload='honesty_box',
                 )
             ]
         ),
         element(
-            title='Engagement',
-            subtitle="Measure Engagment and satisfaction score",
+            title='👪 Sense of community',
+            subtitle="📉Gauge sense of community with the scientific SO(V)C index survey",
             buttons =[
                 postback_button(
-                    'Measure',
+                    'Monitor group health 🌡️',
                     payload='measure_engagement'
                 )
             ]
         ),
         element(
-            title='Dashaboard',
-            subtitle="Show dashboard results",
+            title='📊Dashboard',
+            subtitle="👀See Pawa stats & insights on your group",
             buttons=[
                 web_button(
-                    title="Dashboard",
+                    title="Go to Dashboard ➡️",
                     url=settings.SITE_URL + '/dashboard/' + str(current_bot_user.current_group_id),
                     messenger_extensions=True,
                     height='full'
@@ -233,11 +237,11 @@ def handle_get_started(recipient_id, message=""):
         ),
 
         element(
-            title='Honesty Inbox',
-            subtitle='Shows all anonymous posts',
+            title='📥Honesty Inbox',
+            subtitle='👀View, post or delete sensitive content shared anonymously',
             buttons = [
                 web_button(
-                    title="Honesty Inbox",
+                    title="Go to Inbox ➡️",
                     url=settings.SITE_URL + '/posts/' + str(current_bot_user.current_group_id)
                 )
             ]
