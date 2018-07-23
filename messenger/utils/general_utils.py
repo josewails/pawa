@@ -35,7 +35,7 @@ def send_survey(recipient_id, group_id):
     current_bot_user.current_question_index = 0
     current_bot_user.save()
 
-    message = 'Hi 👋, you are taking a Sense of Community survey for ' + current_group.name + ' Facebook Group'
+    message = 'Hi 👋, you are taking a Sense of Community survey for ' + current_group.name
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
     message = "It will take you 2 minutes only 😄. Let's go 🚀"
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
@@ -105,7 +105,7 @@ def send_share_template(recipient_id, group_id, type=None):
             }
         }
 
-        message = '🖱️Tap share below to send Sense of Community survey link to ' + current_group.name + ' members on Messenger '
+        message = '🖱️Tap share to send Sense of Community survey link to ' + current_group.name + ' members '
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
         res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
@@ -114,7 +114,7 @@ def send_share_template(recipient_id, group_id, type=None):
         share_elements = [
             element(
                 title='How helpful is this community❓',
-                subtitle='We want to gauge sense of community, belonging & satisfaction in ' + current_group.name + 'group. Take a quick survey 👇',
+                subtitle='We want to gauge sense of community, belonging & satisfaction in ' + current_group.name +  ' group. Take a quick survey 👇',
                 buttons=[
                     web_button(
                         title='Take Survey 🙋',
@@ -133,7 +133,7 @@ def send_share_template(recipient_id, group_id, type=None):
             }
         }
 
-        message = '🖱️Tap share below to send honesty box link to ' + current_group.name + 'members to post anonymously'
+        message = '🖱️Share honesty box link for ' + current_group.name + ' members to post anonymously'
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
         res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
@@ -196,7 +196,7 @@ def handle_get_started(recipient_id, message=""):
             subtitle='➡️Navigate to Group Insights on Facebook to get this data',
             buttons=[
                 web_button(
-                    title='Calculate Activity Score 🔢',
+                    title='Activity Score 🔢',
                     url=settings.SITE_URL+'/get_group_info/' + str(current_bot_user.current_group_id),
                     messenger_extensions=True,
                     height='full'
@@ -214,11 +214,11 @@ def handle_get_started(recipient_id, message=""):
             ]
         ),
         element(
-            title='👪 Sense of community',
-            subtitle="📉Gauge sense of community with the scientific SO(V)C index survey",
+            title='👪 Sense of community (SOC)',
+            subtitle="📉Gauge sense of community with the scientific SOC(V) index survey",
             buttons =[
                 postback_button(
-                    'Monitor group health 🌡️',
+                    'Measure SOC 🌡️',
                     payload='measure_engagement'
                 )
             ]
