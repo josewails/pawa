@@ -92,7 +92,10 @@ def handle_selected_group_ref(recipient_id, group_id):
 
     name = current_bot_user.get_name()
 
-    message = 'Hi %s!👋 welcome to Pawa on Messenger ❤️' % name
+    message = '❤️'
+    messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
+    
+    message = 'Hi %s!👋 welcome to Pawa on Messenger' % name
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
 
     current_group = Group.objects.get(id=group_id)
