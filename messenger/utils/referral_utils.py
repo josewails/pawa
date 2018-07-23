@@ -63,7 +63,7 @@ def handle_pamojaness_messenger(recipient_id):
 
     current_bot_user = BotUser.objects.get(messenger_id=recipient_id)
     name = current_bot_user.get_name()
-    message = 'Hi  %s,  thanks for getting in touch!' % name
+    message = 'Hi  %s!👋Welcome to Pawa on Messenger ❤️' % name
 
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
 
@@ -92,11 +92,11 @@ def handle_selected_group_ref(recipient_id, group_id):
 
     name = current_bot_user.get_name()
 
-    message = 'Hi  %s,  thanks for getting in touch!' % name
+    message = 'Hi %s!👋 welcome to Pawa on Messenger ❤️' % name
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
 
     current_group = Group.objects.get(id=group_id)
-    message = "You are now doing some shit for %s Facebook Group" % current_group.name
+    message = "Happy to help you with tools to drive engagement in %s Facebook Group.Just tap on a button on the MENU below👇" % current_group.name
 
     handle_get_started(recipient_id=recipient_id, message=message)
 
