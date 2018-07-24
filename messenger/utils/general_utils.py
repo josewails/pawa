@@ -142,15 +142,13 @@ def send_share_template(recipient_id, group_id, type=None):
                 buttons=[
                     web_button(
                         title='Post Now',
-                        url=share_url
+                        url=share_url,
+                        messenger_extensions=True,
+                        height='full'
                     )
                 ]
             )
         ]
-
-
-
-
 
     elements = (
         element(
@@ -238,7 +236,9 @@ def handle_get_started(recipient_id, message=""):
             buttons = [
                 web_button(
                     title="Honesty Inbox",
-                    url=settings.SITE_URL + '/posts/' + str(current_bot_user.current_group_id)
+                    url=settings.SITE_URL + '/posts/' + str(current_bot_user.current_group_id),
+                    messenger_extensions=True,
+                    height='full'
                 )
             ]
         )
