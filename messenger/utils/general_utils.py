@@ -110,7 +110,7 @@ def send_share_template(recipient_id, group_id, type=None):
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
         res = requests.get('https://tinyurl.com/api-create.php?url=' + url)
-        share_url = res.text
+        share_url = 'https://tinyurl.com/' + res.text.split('/')[-1]
 
         share_elements = [
             element(
@@ -258,7 +258,8 @@ def handle_get_started(recipient_id, message=""):
 
         messenger_bot.send_text_message(recipient_id, message=message)
         messenger_bot.send_action(recipient_id=recipient_id, action='typing_on')
-        messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
+        re = messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
+        print(re)
 
 
 
