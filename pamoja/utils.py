@@ -53,7 +53,7 @@ def get_groups_context(current_group):
             average_ratings[j].append(total_ratings[j] / (i + 1))
 
     plot1 = figure(
-        width=400, height=400, title='Engagement over time',
+        width=380, height=400, title='Engagement over time',
         x_axis_label='Date Time', y_axis_label='Engagement',
         x_axis_type='datetime', y_range=(0, 6)
     )
@@ -80,7 +80,7 @@ def get_groups_context(current_group):
     activity_scores = [group_info.activity_score for group_info in current_group_infos]
 
 
-    plot2 = figure(width=400, height=400, title='Activity score over time',
+    plot2 = figure(width=380, height=400, title='Activity score over time',
                    x_axis_label='Date Time', y_axis_label='Activity Score',
                    x_axis_type='datetime')
 
