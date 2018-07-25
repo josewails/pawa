@@ -273,7 +273,7 @@ def handle_no_group(recipient_id):
     buttons = [
         web_button(
             title='Pawa Page',
-            url='http://localhost:3000'
+            url='https://pawa.surge.sh'
         )
     ]
 
