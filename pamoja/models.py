@@ -62,8 +62,6 @@ class Survey(models.Model):
     Model for a group survey
 
     """
-
-    group = models.OneToOneField(Group, null=True, on_delete=models.CASCADE)
     message = models.CharField(max_length=1000, null=True)
 
     def __str__(self):

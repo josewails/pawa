@@ -5,12 +5,37 @@
     <link rel="stylesheet" href=" https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.13.0.min.css" type="text/css">
+
+    <style>
+    .no-data{
+        height: 50%;
+        margin-bottom : 20px;
+    }
+
+    .no-data p {
+        padding-top: 25%;
+        padding-left: 15%;
+    }
+
+    #dashboard-box{
+        background-color: white;
+        padding: 20px 20px 20px 20px;
+    }
+
+    .graph{
+        margin: 0 auto;
+    }
+
+    </style>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            {{ div | safe }}
+    <div id="dashboard-box" class="container">
+        <div  class="row">
+            <div class="graph col-xs-12">
+                {{ div | safe }}
+            </div>
+
         </div>
     </div>
 {% endblock %}

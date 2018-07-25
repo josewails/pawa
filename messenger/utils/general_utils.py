@@ -29,8 +29,7 @@ def send_survey(recipient_id, group_id):
 
     current_bot_user = BotUser.objects.get(messenger_id=recipient_id)
     current_group = Group.objects.get(id=group_id)
-    print(current_group)
-    current_survey = Survey.objects.get(group=current_group)
+    current_survey = Survey.objects.all().first()
     current_bot_user.question_ids = json.dumps([question.id for question in current_survey.questions.all()])
     current_bot_user.current_question_index = 0
     current_bot_user.save()
@@ -66,10 +65,12 @@ def send_question(current_bot_user, current_survey):
 
         quick_replies = []
 
+        choices = ['Not at all', 'Somewhat', 'Mostly', 'Completely']
+
         for i in range(4):
             quick_replies.append(
                 text_quick_reply(
-                    title=str(i + 1),
+                    title=choices[i],
                     payload=json.dumps(
                         {
                             'question_id': question_id,
@@ -188,6 +189,10 @@ def handle_get_started(recipient_id, message=""):
 
     current_bot_user = BotUser.objects.get(messenger_id=recipient_id)
 
+    if not current_bot_user.current_group_id:
+        handle_no_group(recipient_id=recipient_id)
+        return
+
     elements = [
         element(
             title='📈Group Activity Score',
@@ -253,6 +258,27 @@ def handle_get_started(recipient_id, message=""):
     messenger_bot.send_text_message(recipient_id, message=message)
     messenger_bot.send_action(recipient_id=recipient_id, action='typing_on')
     messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
+
+
+def handle_no_group(recipient_id):
+
+    current_bot_user = BotUser.objects.get(messenger_id=recipient_id)
+
+    message = "Hi %s" % current_bot_user.get_name()
+    messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
+
+    message = 'This bot is meant for group admins, You must chose a group first. Click below to see our Landing page'
+
+    buttons = [
+        web_button(
+            title='Pawa Page',
+            url='http://localhost:3000'
+        )
+    ]
+
+    messenger_bot.send_action(recipient_id=recipient_id, action='typing_on')
+    messenger_bot.send_button_message(recipient_id=recipient_id, text=message, buttons=buttons)
+
 
 
 

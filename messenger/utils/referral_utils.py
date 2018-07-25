@@ -45,6 +45,9 @@ def handle_referral(recipient_id, referral, ref_type):
             group_id = json.loads(referral)['selected_group_id']
             handle_selected_group_ref(recipient_id, group_id)
 
+        elif referral == 'send_menu':
+            handle_get_started(recipient_id=recipient_id, message='Back to Pawa, you can try some of these other tools :)')
+
     elif ref_type == 'get_started':
         if 'honesty_box_ref' in referral:
             group_id = json.loads(referral)['honesty_box_ref']['data']['group_id']

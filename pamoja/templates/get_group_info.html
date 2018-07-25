@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-offset-3 col-sm-6">
+        <div class="pawa-box col-xs-offset-1 col-xs-10">
             {% if login_required %}
                 <a href="{% url 'social:begin' 'facebook' %}?next=/get_group_info" type='button' class='btn  btn-fill btn-warning' name='next'>Connect to Facebook</a>
             {% else %}

@@ -1,6 +1,9 @@
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+import urllib.parse
+
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from .forms import (
     PostForm,
@@ -39,6 +42,8 @@ def main(request):
 def anonymous_post(request, group_id):
     context = dict()
 
+    fb_origin = request.GET.get('fb_iframe_origin')
+
     post_form = PostForm()
     if request.method == 'POST':
         post_form = PostForm(request.POST)
@@ -48,26 +53,38 @@ def anonymous_post(request, group_id):
             post = Post(message=message, group_id=group_id)
             post.save()
 
-            response = HttpResponseRedirect('/anonymous_post_success')
-            return response_with_x_frames(response)
+            response = HttpResponseRedirect('/anonymous_post_success/' + str(group_id))
+            return response_with_x_frames(response, fb_origin)
 
     context['post_form'] = post_form
     response = render(request, 'anonymous_post.html', context)
-    return response_with_x_frames(response)
+    return response_with_x_frames(response, fb_origin)
+
 
 def all_posts(request, group_id):
+
+    fb_origin = request.GET.get('fb_iframe_origin')
 
     posts = Post.objects.filter(group_id=group_id)
 
     response = render(request, 'posts.html', {'posts': posts})
-    return response_with_x_frames(response)
+    return response_with_x_frames(response, fb_origin)
 
-def anonymous_post_success(request):
-    response = render(request, 'anonymous_post_success.html', {})
-    return response_with_x_frames(response)
+
+def anonymous_post_success(request, group_id):
+
+    fb_origin = request.GET.get('fb_iframe_origin')
+
+    context = dict()
+    context['pawa_url'] = 'https://m.me/452174761913102?ref=' + urllib.parse.quote('send_menu')
+    context['anonymous_post_url'] = settings.SITE_URL + '/anonymous_post/' + str(group_id)
+    response = render(request, 'anonymous_post_success.html', context)
+    return response_with_x_frames(response, fb_origin)
 
 
 def get_group_info(request, group_id):
+
+    fb_origin = request.GET.get('fb_iframe_origin')
 
     context = dict()
     group_info_form = GroupInfoForm()
@@ -82,32 +99,39 @@ def get_group_info(request, group_id):
             group_info.save()
 
             response = HttpResponseRedirect('/activity_score/' + str(group_info.id))
-            return response_with_x_frames(response)
+            return response_with_x_frames(response, fb_origin)
 
     context['group_info_form'] = group_info_form
 
     response = render(request, 'get_group_info.html', context)
-    return response_with_x_frames(response)
+    return response_with_x_frames(response, fb_origin)
 
 
 def activity_score(request, group_info_id):
     context = dict()
 
+    fb_origin = request.GET.get('fb_iframe_origin')
+
     group_info, _ = GroupInfo.objects.get_or_create(pk=group_info_id)
+    current_group_id = group_info.group.id
+    context['dashboard_url'] = settings.SITE_URL + '/dashboard/' + str(current_group_id)
+    context['pawa_url'] = 'https://m.me/452174761913102?ref=' + urllib.parse.quote('send_menu')
     context['activity_score'] = group_info.activity_score
 
     response = render(request, 'activity_score.html', context)
-    return response_with_x_frames(response)
+    return response_with_x_frames(response, fb_origin)
 
 
 def dashboard(request, group_id):
+
+    fb_origin = request.GET.get('fb_iframe_origin')
 
     current_group = Group.objects.get(id=group_id)
     context = get_groups_context(current_group)
     context['current_group'] = current_group
 
     response = render(request, 'dashboard.html', context)
-    return response_with_x_frames(response)
+    return response_with_x_frames(response, fb_origin)
 
 
 @csrf_exempt

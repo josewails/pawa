@@ -1,22 +1,37 @@
 {% extends 'home.html' %}
-
+{% block local_css %}
+    <style>
+    .card{
+        background-color: white;
+        min-height: 200px;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        padding-top : 20px;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+    </style>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
          <h3>All Posts</h3>
-        {% for post in posts %}
-             <div class="col-sm-6 col-sm-offset-3">
+        {% if posts %}
+            {% for post in posts %}
+             <div class="col-xs-8 col-xs-offset-2">
                  <div class="card">
 
-                    <h4><b>Post # {{ post.id }}</b></h4>
+                    <h4><b>Post # {{ forloop.counter }}</b></h4>
                     <p id="post-{{ post.id }}"> {{ post.message }}</p>
 
-                     <button class="copy-btn"  id="{{ post.id }}">Copy</button>
-                     <button class="delete-btn" id="{{ post.id }}">Delete</button>
-
                 </div>
+                <button class="copy-btn btn btn-primary"  id="{{ post.id }}">Copy</button>
+                 <button class="delete-btn btn btn-secondary" id="{{ post.id }}">Delete</button>
              </div>
         {% endfor %}
+        {% else %}
+            <p>No posts to show</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

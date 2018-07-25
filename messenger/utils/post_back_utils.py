@@ -36,6 +36,9 @@ def handle_post_back(recipient_id, payload):
     if payload == 'honesty_box':
         handle_honesty_box_postback(recipient_id)
 
+    if payload == 'main_menu':
+        handle_get_started(recipient_id, message="Choose from one of the following")
+
 
 def handle_measure_engagement(recipient_id):
 

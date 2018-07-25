@@ -43,11 +43,13 @@ def webhook(request):
 
         request_data = json.loads(request.body.decode('utf-8'))
 
-        print(request_data)
-
         recipient_id = request_data['entry'][0]['messaging'][0]['sender']['id']
 
-        # The following block of try-except blocks just checks for what type of message we are receiving
+
+        try:
+            referral = request_data['entry'][0]['messaging'][0]['referral']['ref']
+        except KeyError:
+            referral = None
 
         try:
             BotUser.objects.get(messenger_id=recipient_id)
@@ -71,11 +73,6 @@ def webhook(request):
             text_message = None
 
         try:
-            referral = request_data['entry'][0]['messaging'][0]['referral']['ref']
-        except KeyError:
-            referral = None
-
-        try:
             optin_referral = request_data['entry'][0]['messaging'][0]['optin']['ref']
 
         except KeyError:
@@ -85,6 +82,7 @@ def webhook(request):
             get_started_referral = request_data['entry'][0]['messaging'][0]['postback']['referral']['ref']
         except KeyError:
             get_started_referral = None
+
 
         if text_message and not quick_reply_message:
             handle_text_message(recipient_id, text_message=text_message)

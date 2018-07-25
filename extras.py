@@ -5,7 +5,7 @@ from faker import Faker
 import requests
 from YamJam import yamjam
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pawa.settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pawa.settings.dev')
 django.setup()
 
 import random
@@ -23,6 +23,19 @@ def messenger_setup():
     url = 'https://graph.facebook.com/v2.6/me/messenger_profile?' \
           'access_token=' + page_access_token
 
+    persistent_menu = [
+        {
+            "locale": "default",
+            "call_to_actions": [
+                {
+                    "type": "postback",
+                    "title": '☱ Menu',
+                    "payload": "main_menu"
+                }
+            ]
+        }
+    ]
+
     data = {
         'get_started': {
             'payload': 'get_started'
@@ -31,7 +44,8 @@ def messenger_setup():
             'https://acquiro.serveo.net',
             'https://pamojaness.herokuapp.com',
             'https://m.me'
-        ]
+        ],
+        'persistent_menu': persistent_menu
     }
 
     response = requests.post(url, json=data)
@@ -70,28 +84,7 @@ def add_survey_questions():
             question=fake.sentence()
         )
 
-def add_test_user():
 
+messenger_setup()
 
-
-    access_token = 'EAADYF2DPXZAgBAPbIzv9kvs0Ut2SIqvs63BC3Ft13mZAow6msbCDuXPgNUSKck2cPZCFrHUzRqiRilZA8EzH8dZAqVHIS1' \
-                   'p0LngMYJZBtOdFqiifXZBQqc3KkjPpBRnmC9J0PCZBCHuLGRIxZCBJpXsCdC1NuVd9yNm6XhlPqXAcfGO3JlIEKvPNlNrMS' \
-                   'UW8eed1urQBcwwurugZDZD'
-
-
-    facebook_graph_url = 'https://graph.facebook.com?access_token=' + access_token
-
-    data = {
-        'name': "pawa",
-        'password': 'pawaness'
-    }
-
-    re=requests.post(
-        url=facebook_graph_url,
-        json=data
-    )
-
-    print(re)
-
-add_survey_questions()
 
