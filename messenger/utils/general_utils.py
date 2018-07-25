@@ -109,7 +109,7 @@ def send_share_template(recipient_id, group_id, type=None):
         message = '🖱️Tap share to send Sense of Community survey link to ' + current_group.name + ' members '
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
-        res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
+        res = requests.get('https://tinyurl.com/api-create.php?url=' + url)
         share_url = res.text
 
         share_elements = [
@@ -137,8 +137,9 @@ def send_share_template(recipient_id, group_id, type=None):
         message = '🖱️Share honesty box link for ' + current_group.name + ' members to post anonymously'
 
         url = 'https://m.me/452174761913102?ref=' + urllib.parse.quote(json.dumps(data))
-        res = requests.get('http://tinyurl.com/api-create.php?url=' + url)
-        share_url = res.text
+        res = requests.get('https://tinyurl.com/api-create.php?url=' + url)
+        share_url = 'https://tinyurl.com/' + res.text.split('/')[-1]
+
 
         share_elements = [
             element(
@@ -175,8 +176,8 @@ def send_share_template(recipient_id, group_id, type=None):
         )
     )
 
-    messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
-
+    re = messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
+    print(re)
 
 def handle_get_started(recipient_id, message=""):
     """
@@ -191,73 +192,73 @@ def handle_get_started(recipient_id, message=""):
 
     if not current_bot_user.current_group_id:
         handle_no_group(recipient_id=recipient_id)
-        return
+    else:
 
-    elements = [
-        element(
-            title='📈Group Activity Score',
-            subtitle='➡️Navigate to Group Insights on Facebook to get this data',
-            buttons=[
-                web_button(
-                    title='Activity Score 🔢',
-                    url=settings.SITE_URL+'/get_group_info/' + str(current_bot_user.current_group_id),
-                    messenger_extensions=True,
-                    height='full'
-                )
-            ]
-        ),
-        element(
-            title='✉️HonestyBox',
-            subtitle='Give members a voice to seek help with the power to post anonymously',
-            buttons =[
-                postback_button(
-                    title='Give a voice 🎤',
-                    payload='honesty_box',
-                )
-            ]
-        ),
-        element(
-            title='👪 Sense of community (SOC)',
-            subtitle="📉Gauge sense of community with the scientific SOC(V) index survey",
-            buttons =[
-                postback_button(
-                    'Measure SOC 🌡️',
-                    payload='measure_engagement'
-                )
-            ]
-        ),
-        element(
-            title='📊Dashboard',
-            subtitle="👀See Pawa stats & insights on your group",
-            buttons=[
-                web_button(
-                    title="Go to Dashboard ➡️",
-                    url=settings.SITE_URL + '/dashboard/' + str(current_bot_user.current_group_id),
-                    messenger_extensions=True,
-                    height='full'
-                )
-            ]
-        ),
+        elements = [
+            element(
+                title='📈Group Activity Score',
+                subtitle='➡️Navigate to Group Insights on Facebook to get this data',
+                buttons=[
+                    web_button(
+                        title='Activity Score 🔢',
+                        url=settings.SITE_URL+'/get_group_info/' + str(current_bot_user.current_group_id),
+                        messenger_extensions=True,
+                        height='full'
+                    )
+                ]
+            ),
+            element(
+                title='✉️HonestyBox',
+                subtitle='Give members a voice to seek help with the power to post anonymously',
+                buttons =[
+                    postback_button(
+                        title='Give a voice 🎤',
+                        payload='honesty_box',
+                    )
+                ]
+            ),
+            element(
+                title='👪 Sense of community (SOC)',
+                subtitle="📉Gauge sense of community with the scientific SOC(V) index survey",
+                buttons =[
+                    postback_button(
+                        'Measure SOC 🌡️',
+                        payload='measure_engagement'
+                    )
+                ]
+            ),
+            element(
+                title='📊Dashboard',
+                subtitle="👀See Pawa stats & insights on your group",
+                buttons=[
+                    web_button(
+                        title="Go to Dashboard ➡️",
+                        url=settings.SITE_URL + '/dashboard/' + str(current_bot_user.current_group_id),
+                        messenger_extensions=True,
+                        height='full'
+                    )
+                ]
+            ),
 
-        element(
-            title='📥Honesty Inbox',
-            subtitle='👀View, post or delete sensitive content shared anonymously',
-            buttons = [
-                web_button(
+            element(
+                title='📥Honesty Inbox',
+                subtitle='👀View, post or delete sensitive content shared anonymously',
+                buttons = [
+                    web_button(
 
-                    title="Go to Inbox ➡️",
-                    url=settings.SITE_URL + '/posts/' + str(current_bot_user.current_group_id),
-                    messenger_extensions=True,
-                    height='full'
+                        title="Go to Inbox ➡️",
+                        url=settings.SITE_URL + '/posts/' + str(current_bot_user.current_group_id),
+                        messenger_extensions=True,
+                        height='full'
 
-                )
-            ]
-        )
-    ]
+                    )
+                ]
+            )
+        ]
 
-    messenger_bot.send_text_message(recipient_id, message=message)
-    messenger_bot.send_action(recipient_id=recipient_id, action='typing_on')
-    messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
+        messenger_bot.send_text_message(recipient_id, message=message)
+        messenger_bot.send_action(recipient_id=recipient_id, action='typing_on')
+        messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
 
 
 

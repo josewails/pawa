@@ -45,6 +45,8 @@ def webhook(request):
 
         recipient_id = request_data['entry'][0]['messaging'][0]['sender']['id']
 
+        print(request_data)
+
 
         try:
             referral = request_data['entry'][0]['messaging'][0]['referral']['ref']
