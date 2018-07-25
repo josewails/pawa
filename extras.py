@@ -44,7 +44,8 @@ def messenger_setup():
             'https://acquiro.serveo.net',
             'https://pawaness.herokuapp.com',
             'https://m.me',
-            'https://tinyurl.com'
+            'https://tinyurl.com',
+            'https://13d6f5ca.ngrok.io'
         ],
         'persistent_menu': persistent_menu
     }
@@ -56,20 +57,14 @@ def messenger_setup():
 def add_survey_questions():
     fake = Faker()
 
-    groups = Group.objects.all()
-    group_one = groups[0]
-    group_two = groups[1]
-
     for survey in Survey.objects.all():
         survey.delete()
 
     survey_one, _ = Survey.objects.get_or_create(
-        group=group_one,
         message=fake.sentence()
     )
 
     survey_two, _ = Survey.objects.get_or_create(
-        group=group_two,
         message=fake.sentence()
     )
 
@@ -86,6 +81,6 @@ def add_survey_questions():
         )
 
 
-messenger_setup()
+add_survey_questions()
 
 

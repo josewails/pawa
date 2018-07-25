@@ -1,8 +1,17 @@
 {% extends 'home.html' %}
-{% block local_js %}
+{% block local_css %}
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 {% endblock %}
 {% block content %}
+       <script>
+        (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'Messenger'));
+    </script>
     <div class="container">
         <div class="row">
             <div class="pawa-box col-xs-10 col-xs-offset-1">
@@ -21,12 +30,52 @@
                 <p><i>am = Active Members</i></p>
 
                 <p>
-                    It turns out that your activity score is: <span id="activity-score">{{ activity_score }}</span>
+                    It turns out that your Group activity score is: <span id="activity-score">{{ activity_score }}</span>
                 </p>
 
-                <a  href="{{ pawa_url }}" type="button" class="btn btn-primary">Back to Pawa</a>
+                <button  id="close-button" type="button" class="btn btn-primary">Back to Pawa</button>
                 <a  href="{{ dashboard_url }}" type="button" class="btn btn-secondary">Go to Dashboard</a>
             </div>
         </div>
     </div>
 {% endblock %}
+
+{% block local_js %}
+
+    <script>
+    $(document).ready(function(){
+        window.extAsyncInit = function() {
+         MessengerExtensions.getContext('191916398164935',
+             function(thread_context){
+               var psid = thread_context.psid;
+               $('#close-button').click(function(){
+                 var request = $.ajax({
+                     method: 'POST',
+                     url: '/webview_close',
+                     data: {
+                         'psid': psid,
+                         'type': 'activity_score'
+                     }
+                 });
+
+                 request.done(function(message){
+                     MessengerExtensions.requestCloseBrowser(function(success){
+                            console.log('closing this webview')
+                         }, function(error){
+                            alert(error);
+                         }
+                     );
+                 });
+
+                 request.fail(function(err){
+                     console.log(err);
+                 })
+              });
+         },function(error){
+             alert(error);
+         });
+        };
+    });
+    </script>
+{% endblock %}
+

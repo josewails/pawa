@@ -1,12 +1,23 @@
 {% extends 'home.html' %}
 
 {% block content %}
+    <script>
+        (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'Messenger'));
+    </script>
     <div class="row">
         <div class="pawa-box col-xs-offset-1 col-xs-10">
             <p>Thanks for sharing your thoughts, Check your group to see whether your post has been approved</p>
 
-            <a href="{{ pawa_url }}" type="button" class="btn btn-primary">Back to Pawa</a>
-            <button type="button" class="btn btn-secondary">Post something else</button>
+            <a href="{{ anonymous_post_url }}" type="button" class="btn btn-secondary">Post something else</a>
         </div>
     </div>
+{% endblock %}
+
+{%  block local_js %}
 {% endblock %}

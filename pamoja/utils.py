@@ -67,7 +67,7 @@ def get_groups_context(current_group):
 
     if len(dates) < 2:
         p1_label = Label(x=70, y=70, x_units='screen', y_units='screen',
-                         text='There is not Activity Score data', render_mode='css',
+                         text='There is not Engagement  Data', render_mode='css',
                          border_line_color='black', border_line_alpha=1.0,
                          background_fill_color='white', background_fill_alpha=1.0)
 
@@ -76,10 +76,6 @@ def get_groups_context(current_group):
     plots.append([plot1])
 
     activity_dates = [group_info.created_on for group_info in current_group_infos]
-
-
-
-
 
     activity_scores = [group_info.activity_score for group_info in current_group_infos]
 

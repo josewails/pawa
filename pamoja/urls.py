@@ -10,5 +10,6 @@ urlpatterns =[
     path('get_group_info/<group_id>', views.get_group_info, name='get-group-info'),
     path('activity_score/<group_info_id>', views.activity_score, name='activity-score'),
     path('dashboard/<group_id>', views.dashboard, name='dashboard'),
-    path('delete_post', views.delete_post, name='delete-post')
+    path('delete_post', views.delete_post, name='delete-post'),
+    path('webview_close', views.web_view_close, name='webview-close')
 ]

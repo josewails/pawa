@@ -3,6 +3,7 @@ import urllib.parse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
 
 from .forms import (
@@ -11,6 +12,7 @@ from .forms import (
 )
 
 from .utils import get_groups_context, response_with_x_frames
+from messenger.utils.general_utils import handle_get_started
 
 from .models import (
     Group,
@@ -38,7 +40,7 @@ def main(request):
 
     return render(request, 'main.html', context)
 
-
+@xframe_options_exempt
 def anonymous_post(request, group_id):
     context = dict()
 
@@ -71,6 +73,7 @@ def all_posts(request, group_id):
     return response_with_x_frames(response, fb_origin)
 
 
+@xframe_options_exempt
 def anonymous_post_success(request, group_id):
 
     fb_origin = request.GET.get('fb_iframe_origin')
@@ -98,7 +101,7 @@ def get_group_info(request, group_id):
             group_info.group = current_group
             group_info.save()
 
-            response = HttpResponseRedirect('/activity_score/' + str(group_info.id))
+            response = HttpResponseRedirect(settings.SITE_URL + '/activity_score/' + str(group_info.id))
             return response_with_x_frames(response, fb_origin)
 
     context['group_info_form'] = group_info_form
@@ -107,6 +110,7 @@ def get_group_info(request, group_id):
     return response_with_x_frames(response, fb_origin)
 
 
+@xframe_options_exempt
 def activity_score(request, group_info_id):
     context = dict()
 
@@ -121,7 +125,7 @@ def activity_score(request, group_info_id):
     response = render(request, 'activity_score.html', context)
     return response_with_x_frames(response, fb_origin)
 
-
+@xframe_options_exempt
 def dashboard(request, group_id):
 
     fb_origin = request.GET.get('fb_iframe_origin')
@@ -153,6 +157,29 @@ def delete_post(request):
     return HttpResponse('error')
 
 
+@csrf_exempt
+def web_view_close(request):
 
+    if request.method == 'POST':
+        psid = request.POST['psid']
+        type = request.POST['type']
 
+        if psid:
 
+            if type == 'activity_score':
+
+                handle_get_started(recipient_id=psid, message="Thanks for measuring activity score, "
+                                                              "You can try something else here")
+
+                return HttpResponse('success')
+
+            else:
+
+                handle_get_started(recipient_id=psid, message="Thanks for posting, You can try something else here")
+
+                return HttpResponse('success')
+
+        else:
+            return HttpResponse('error')
+
+    return HttpResponse('error')

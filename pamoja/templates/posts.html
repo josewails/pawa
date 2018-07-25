@@ -25,8 +25,8 @@
                     <p id="post-{{ post.id }}"> {{ post.message }}</p>
 
                 </div>
-                <button class="copy-btn btn btn-primary"  id="{{ post.id }}">Copy</button>
-                 <button class="delete-btn btn btn-secondary" id="{{ post.id }}">Delete</button>
+                <button data-purpose="copy-btn" class="btn btn-primary"  id="{{ post.id }}">Copy</button>
+                 <button data-purpose="delete-button" class="btn btn-secondary" id="{{ post.id }}">Delete</button>
              </div>
         {% endfor %}
         {% else %}
@@ -42,9 +42,9 @@
 
         $('button').click(function(){
             var current_id= $(this).attr('id');
-            var current_class = $(this).attr('class');
+            var purpose = $(this).attr('data-purpose');
 
-            if(current_class === 'copy-btn'){
+            if(purpose === 'copy-btn'){
                 current_id = "post-" + current_id;
 
                 var copyText = $("#" + current_id).text();
@@ -59,6 +59,8 @@
                 document.execCommand("copy");
 
                 current_input.remove();
+
+                alert("Copied Successfully")
 
             }else{
 

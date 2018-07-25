@@ -148,9 +148,7 @@ def send_share_template(recipient_id, group_id, type=None):
                 buttons=[
                     web_button(
                         title='Post anonymously 📤',
-                        url=share_url,
-                        messenger_extensions=True,
-                        height='full'
+                        url=share_url
                     )
                 ]
             )

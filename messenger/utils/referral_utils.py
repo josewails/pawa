@@ -77,7 +77,9 @@ def handle_honesty_box_ref(recipient_id, group_id):
     buttons = [
         web_button(
             title='Post now 📤',
-            url=settings.SITE_URL + '/anonymous_post/' + str(group_id)
+            url=settings.SITE_URL + '/anonymous_post/' + str(group_id),
+            messenger_extensions = True,
+            height='full'
         )
     ]
 
