@@ -260,6 +260,7 @@ def handle_get_started(recipient_id, message=""):
     messenger_bot.send_generic_message(recipient_id=recipient_id, elements=elements)
 
 
+
 def handle_no_group(recipient_id):
 
     current_bot_user = BotUser.objects.get(messenger_id=recipient_id)
