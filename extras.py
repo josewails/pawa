@@ -42,7 +42,7 @@ def messenger_setup():
         },
         'whitelisted_domains': [
             'https://acquiro.serveo.net',
-            'https://pamojaness.herokuapp.com',
+            'https://pawaness.herokuapp.com',
             'https://m.me',
             'https://tinyurl.com'
         ],
