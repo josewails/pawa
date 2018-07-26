@@ -7,13 +7,14 @@
             {% if login_required %}
                 <a href="{% url 'social:begin' 'facebook' %}?next=/get_group_info" type='button' class='btn  btn-fill btn-warning' name='next'>Connect to Facebook</a>
             {% else %}
-                <h4>Group Info Form</h4>
+                <h5>Navigate to Group Insights on your Facebook Group to find this data</h5>
+                <h6>💡Tip:Best if calculated monthly</h6>
                 <form action="" method="post">
                     {% csrf_token %}
                     {% bootstrap_form group_info_form %}
                     {% buttons %}
                         <button type="submit" class="btn btn-primary">
-                            {% bootstrap_icon "star" %} Submit
+                            {% bootstrap_icon "star" %} Calculate🔢
                         </button>
                   {% endbuttons %}
                 </form>
