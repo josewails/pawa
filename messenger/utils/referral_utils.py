@@ -72,7 +72,7 @@ def handle_pamojaness_messenger(recipient_id):
 
 
 def handle_honesty_box_ref(recipient_id, group_id):
-    message = 'By posting anonymously you can safely get help! Admins will see your message and decide whether to share it in a group but they wont see it came from you.'
+    message = 'By posting anonymously you can safely get help! ⚠️Dont share personal identifiable details like name, place of work, address etc'
 
     buttons = [
         web_button(
