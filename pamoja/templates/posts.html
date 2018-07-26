@@ -15,7 +15,9 @@
 {% block content %}
 <div class="container">
     <div class="row">
-         <h3>All Posts</h3>
+         <h5>All anonymous posts</h5>
+         <h6>💡Tip:Copy to share on group or delete if the post abuses rules.</h6>
+        
         {% if posts %}
             {% for post in posts %}
              <div class="col-xs-8 col-xs-offset-2">
@@ -30,7 +32,7 @@
              </div>
         {% endfor %}
         {% else %}
-            <p>No posts to show</p>
+            <p>⚠️No posts to show! *Get members to submit posts by sharing the 'HonestyBox'</p>
         {% endif %}
     </div>
 </div>
