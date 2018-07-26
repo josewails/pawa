@@ -268,11 +268,11 @@ def handle_no_group(recipient_id):
     message = "Hi %s" % current_bot_user.get_name()
     messenger_bot.send_text_message(recipient_id=recipient_id, message=message)
 
-    message = 'This bot is meant for group admins, You must chose a group first. Click below to see our Landing page'
+    message = '⚠️ This bot works for Facebook Group admins only. Tap button below to be redirected to our landing page ➡️Login With Facebook then select Group'
 
     buttons = [
         web_button(
-            title='Pawa Page',
+            title='Landing Page ➡️',
             url='https://pawa.surge.sh'
         )
     ]
